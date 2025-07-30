@@ -144,7 +144,7 @@ class AsyncCurl:
         self.loop = get_selector(
             loop if loop is not None else asyncio.get_running_loop()
         )
-        self._checker = self.loop.create_task(self._force_timeout())
+        # self._checker = self.loop.create_task(self._force_timeout())
         self._timers: WeakSet[asyncio.TimerHandle] = WeakSet()
         self._setup()
 
@@ -160,9 +160,9 @@ class AsyncCurl:
         """Close and cleanup running timers, readers, writers and handles."""
 
         # Close and wait for the force timeout checker to complete
-        self._checker.cancel()
-        with suppress(asyncio.CancelledError):
-            await self._checker
+        # self._checker.cancel()
+        # with suppress(asyncio.CancelledError):
+        #     await self._checker
 
         # Close all pending futures
         for curl, future in self._curl2future.items():
